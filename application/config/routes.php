@@ -50,7 +50,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 
-// rutas asociadas al usuario 
+// rutas asociadas al usuario bienvenido#contacto
 $route['bienvenido'] = 'UsuarioController/index';
 $route['iniciar'] = 'UsuarioController/Login';
 $route['ingresar'] = 'UsuarioController/ingresoUsuario';
@@ -65,12 +65,14 @@ $route['authCol'] = 'AdminController/colaboradorAutorizado';
 $route['recupera'] = 'UsuarioController/recuperaClave';
 $route['olvido'] = 'UsuarioController/olvidarClave';
 
+
 //fin rutas usuario
 // rutas para el producto
 $route['producto'] = 'ProductoController/index';
 $route['nuevoProducto'] = 'ProductoController/nuevoProducto';
 $route['editaProducto/'] = 'ProductoController/editar/';
-$route['actualiza/(:num)'] = 'ProductoController/ProductoActualizado/$1';
+$route['productos/pagina'] = 'Product';//cuando sea la primera página
+$route['productos/pagina/(:num)'] = 'Product';//cuando no sea la primera página
 $route['inactivo/(:num)'] = 'ProductoController/modal/$1';
 //fin rutas producto
 $route['subcategoria/crear'] = 'subcategoria/SubInCategoria';
@@ -82,6 +84,7 @@ $route['translate_uri_dashes'] = FALSE;
 // rutas inventarios
 $route['salida'] = 'Inventario/OrdenSalida';
 $route['nuevaSalida'] = 'Inventario/CrearSalida';
+$route['ingresosalida'] = 'Inventario/NuevaOrdenSalida';
 $route['notificacion'] = 'Inventario/mostrarNotificacionView';
 $route['nuevaEntrada'] = 'Inventario/verEntrada';
 $route['recuperadato'] = 'Reestablecer/index';

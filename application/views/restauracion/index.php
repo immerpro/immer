@@ -35,6 +35,7 @@
                         <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
 
                             <div class="card-body">
+                                 <?php if($listadoCategoriaDel): ?>
                                 <table class="table table-bordered table-hover ">
                                     <thead class="table-inverse">
                                         <tr>
@@ -58,6 +59,11 @@
                                     </tbody>
 
                                 </table>
+                                 <?php else: ?>
+                                <p class="lead">
+                                   no hay categorias eliminadas
+                                </p>   
+                                <?php endif;?>
                             </div>
                         </div>
 
@@ -79,6 +85,7 @@
                         <!-- Card body -->
                         <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
                             <div class="card-body">
+                                 <?php if($listadosubcategoria): ?>
                                <table class="table table-bordered table-hover ">
                                     <thead class="table-inverse">
                                         <tr>
@@ -102,6 +109,11 @@
                                     </tbody>
 
                                 </table>
+                                 <?php else: ?>
+                                <p class="lead">
+                                   no hay subcategorias inactivas 
+                                </p>   
+                                <?php endif;?>
                             </div>
                         </div>
                     </div>
@@ -121,6 +133,7 @@
                         <!-- Card body -->
                         <div id="collapseFour" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
                             <div class="card-body">
+                                  <?php if($listadoproducto): ?>
                                  <table class="table table-bordered table-hover ">
                                     <thead class="table-inverse">
                                         <tr>
@@ -144,6 +157,11 @@
                                     </tbody>
 
                                 </table>
+                                 <?php else: ?>
+                                <p class="lead">
+                                   no hay productos inactivos 
+                                </p>   
+                                <?php endif;?>
                             </div>
                         </div>
                     </div>
@@ -164,6 +182,7 @@
                         <!-- Card body -->
                         <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree">
                             <div class="card-body">  <!--listadoproveedores-->
+                                <?php if($listadoproveedores): ?>
                                 <table class="table table-bordered table-hover ">
                                     <thead class="table-inverse">
                                         <tr>
@@ -190,10 +209,16 @@
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>
+                                           
 
                                     </tbody>
 
                                 </table>
+                                 <?php else: ?>
+                                <p class="lead">
+                                   no hay proveedores inactivos 
+                                </p>   
+                                <?php endif;?>
                             </div>
                         </div>
                     </div>

@@ -46,66 +46,24 @@
         </div>
     </section>
     <div style="height: 4vh"></div>
-    <section class="row text-center placeholders">
-        <div class="col-6 col-sm-3 placeholder">
-
-            <img src="data:image/gif;base64,R0lGODlhAQABAIABAAJ12AAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
-            <h4>Existencia total</h4>
-            <div class="text-muted"><i class="fa fa-bell fa-3x"> </i> 
-                <h2> <span class="badge badge-yellow">
-                        <?= $existenciaTotal->ExistenciaTotal ?>
-                    </span> </h2>
-
-                <a class="btn btn-link waves-button waves-effect bg-yellow" href="">Ver</a>
-            </div>
-        </div>
-        <div class="col-6 col-sm-3 placeholder">
-            <img src="data:image/gif;base64,R0lGODlhAQABAIABAADcgwAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
-            <h4>Existencia Restante</h4>
-            <div class="text-muted"><i class="fa fa-bell-slash-o fa-3x"> </i>
-                <h2> <span class="badge badge-info">
-                        <?= $vendido->cvendida ?>
-                    </span> </h2>
-                <a class="btn btn-link waves-button waves-effect bg-danger" href="">Ver</a>
-
-            </div>
-        </div>
-        <div class="col-6 col-sm-3 placeholder">
-            <img src="data:image/gif;base64,R0lGODlhAQABAIABAAJ12AAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
-            <h4>Productos Salientes </h4>
-            <div class="text-muted">
-                <div class="text-muted"><i class="fa fa-bell-o fa-3x"> </i>
-                    <h2> <span class="badge badge-elegant">
-                            <?= $CantidadSalida->csalida ?>
-                        </span> </h2>
-                    <a class="btn btn-link waves-button waves-effect bg-danger" href="">Ver</a>
-
-                </div>
-
-            </div>
-        </div>
-        <div class="col-6 col-sm-3 placeholder">
-            <img src="data:image/gif;base64,R0lGODlhAQABAIABAADcgwAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
-            <h4>productos entrantes</h4>
-            <div class="text-muted"><i class="fa fa-server fa-3x"></i>
-                <h2> <span class="badge badge-elegant"><?= $cantidadEntrada->centrada ?></span>
-
-            </div>
-
-            <h2></h2>
-            <a class="btn btn-link waves-button waves-effect bg-faded bg-dark-green"  href="">ver</a>
-
-        </div>
-    </section>
     <script>
-       
+
         function notificacion() {
             alertify.log("Bienvenido(a) <?= $this->session->userdata('apellidos') ?>  al modulo de notificaciones,\n\
-     podra ver las notificaciones de los inventarios.");
+ podra ver las notificaciones de los inventarios.");
             return false;
         }
-        notificacion();
+       
     </script>
+    <script>
+
+        function notificacionExistenciaTotal() {
+            alertify.success("Existencias en el inventario <?= $existenciaTotal->ExistenciaTotal ?>");
+            return false;
+        }
+        notificacionExistenciaTotal();
+    </script>
+
 
     <!-- modales con informacion -->
     <!-- Modal -->
@@ -123,7 +81,7 @@
                 <!--Body-->
                 <div class="modal-body">
                     <table class="table table-bordered table-hover ">
-                        <thead class="table-inverse bg-green">
+                        <thead class="table-inverse bg-grey">
                             <tr>
                                 <th>Producto</th>
                                 <th>Fecha salida</th>
@@ -245,9 +203,7 @@
                                         <?php if ($porAgotarse['estado'] == 1): ?>
                                             <span class="badge badge-primary">ACTIVO</span>
                                         <?php endif; ?>
-                                        <?php if ($porAgotarse['estado'] == 2): ?>
-                                            <span class="badge badge-grey">INACTIVO</span>
-                                        <?php endif; ?>
+                                       
 
                                     </td>
                                     <td><?= $porAgotarse['existencia'] ?></td>
@@ -272,4 +228,5 @@
     <!-- Modal -->
 </div>
 </main>
+<script> notificacion();</script>
 

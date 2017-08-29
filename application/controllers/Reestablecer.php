@@ -5,7 +5,7 @@ class Reestablecer extends CI_Controller {
     //put your code here
     public function __construct() {
         parent::__construct();
-        $this->load->model('inventario_model');
+        $this->load->model('restauracion_model');
     }
 
     public function index() {
@@ -15,10 +15,10 @@ class Reestablecer extends CI_Controller {
         }
         $data = [
             'titulo' => 'Restauracion',
-            'listadoCategoriaDel' => $this->inventario_model->mostrarCategoriaEliminada(),
-            'listadoproveedores' => $this->inventario_model->mostrarProveedor(),
-            'listadosubcategoria'=> $this->inventario_model->mostrarSucategoria(),
-            'listadoproducto'=>$this->inventario_model->mostrarProductos(),
+            'listadoCategoriaDel' => $this->restauracion_model->mostrarRestauracion('Estado_estadoId','categoria'),
+            'listadoproveedores' => $this->restauracion_model->mostrarRestauracion('Estados_idEstados','proveedor'),
+            'listadosubcategoria'=> $this->restauracion_model->mostrarRestauracion('Estado_estadoId','subcategoria'),
+            'listadoproducto'=>$this->restauracion_model->mostrarRestauracion('Estados_idEstados','producto'),
             'es_usuario_normal' => FALSE
         ];
         $this->load->view('templates/header', $data);
@@ -28,7 +28,13 @@ class Reestablecer extends CI_Controller {
     }
 
     public function activoCategoria($codCategoria) {
-        $activoCat = $this->inventario_model->activarCategoria($codCategoria);
+        /*
+           $colEstado =>columna estado, 
+         * $tabla=> nombre tabla, 
+         * $idTabla=> codigo de la tabla, 
+         * $valId=> valor de la tabla
+         *          */
+        $activoCat = $this->restauracion_model->activarRestauracion('Estado_estadoId', 'categoria', 'idCategoria', $codCategoria);
         if ($activoCat) {
             echo "<script type='text/javascript'>"
             . "alert('la categorìa fue activada correctamente y se podra ver en el listado de categorias');"
@@ -38,7 +44,7 @@ class Reestablecer extends CI_Controller {
     }
 
     public function activoProveedor($codProveedor) {
-        $activoProvee = $this->inventario_model->activarProveedor($codProveedor);
+        $activoProvee = $this->restauracion_model->activarRestauracion('Estados_idEstados', 'proveedor', 'idProveedor', $codProveedor);
         if ($activoProvee) {
             echo "<script type='text/javascript'>"
             . "alert('El Proveedor fue Activado correctamente y se podra ver en el listado de Proveedores');"
@@ -47,7 +53,7 @@ class Reestablecer extends CI_Controller {
         }
     }
     public function activarsubcategoria($codsubcategoria) {
-       $activosub = $this->inventario_model->activarsubcategoria($codsubcategoria);
+       $activosub = $this->restauracion_model->activarRestauracion('Estado_estadoId', 'subcategoria', 'idSubcategoria', $codsubcategoria);
         if ($activosub) {
             echo "<script type='text/javascript'>"
             . "alert('La subcategoria fue Activada correctamente y se podra ver en el listado de Subcategorias');"
@@ -57,7 +63,7 @@ class Reestablecer extends CI_Controller {
     }
     
     public function activarproducto($codproducto) {
-       $activopro = $this->inventario_model->activarRestauracion('Estados_idEstados','producto','idProducto',$codproducto);
+       $activopro = $this->restauracion_model->activarRestauracion('Estados_idEstados','producto','idProducto',$codproducto);
         if ($activopro) {
             echo "<script type='text/javascript'>"
             . "alert('El producto fue activada correctamente y se podra ver en el listado de Productos');"

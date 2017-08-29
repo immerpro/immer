@@ -36,7 +36,7 @@
             <div class="col-6">
                 <div class="md-form">
                     <i class="fa fa-cart-plus prefix"></i>
-                    <input type="text" id="prod"  value="<?= set_value('txtNombProd') ?>" class="form-control" name="txtNombProd" data-parsley-trigger="keyup" data-parsley-required-message="el campo no debe estar vacio">
+                    <input type="text" id="prod"  value="<?= set_value('txtNombProd') ?>" class="form-control" name="txtNombProd" data-parsley-trigger="keyup" data-parsley-required-message="el campo no debe estar vacio" data-parsley-required="true">
                     <label for="prod">Producto</label>
                 </div> 
             </div>

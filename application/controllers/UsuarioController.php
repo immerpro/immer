@@ -9,7 +9,7 @@ class UsuarioController extends CI_Controller {
 
     // pagina principal
     public function index() {
-        $informacion = array('titulo' => 'immerpro', 'slogan' => 'Bienvenido', 'es_usuario_normal' =>TRUE);
+        $informacion = array('titulo' => 'immerpro', 'slogan' => 'Bienvenido', 'es_usuario_normal' => TRUE);
         $this->load->view('templates/header', $informacion);
         $this->load->view('templates/menu', $informacion);
         $this->load->view('Usuario/index');
@@ -23,7 +23,7 @@ class UsuarioController extends CI_Controller {
                 $data = array('token' => $this->token(),
                     'titulo' => 'login',
                     'slogan' => '¡¡Hazme parte de ti!!',
-                   'es_usuario_normal' =>TRUE);
+                    'es_usuario_normal' => TRUE);
                 $this->load->view('templates/header', $data);
                 $this->load->view('templates/menu', $data);
                 $this->load->view('Usuario/Login');
@@ -38,9 +38,9 @@ class UsuarioController extends CI_Controller {
                 break;
             default:
                 $data = array('titulo' => 'login', 'slogan' => '¡¡Hazme parte de ti!!',
-                   'es_usuario_normal' =>TRUE);
+                    'es_usuario_normal' => TRUE);
                 $this->load->view('templates/header', $data);
-                $this->load->view('templates/menu',$data);
+                $this->load->view('templates/menu', $data);
                 $this->load->view('Usuario/Login');
                 $this->load->view('templates/footer');
                 break;
@@ -51,14 +51,20 @@ class UsuarioController extends CI_Controller {
         $this->load->library('form_validation');
         if ($this->input->post('token') && $this->input->post('token') == $this->session->userdata('token')) {
 
-            $this->form_validation->set_rules('txtusuario', 'usuario', 'required|trim|min_length[5]|max_length[15]xss_clean');
-            $this->form_validation->set_rules('txtpassword', 'password', 'required|trim|min_length[5]|max_length[12]xss_clean');
+            $this->form_validation->set_rules('txtusuario', 'usuario', 'required|trim|min_length[5]|max_length[12]xss_clean');
+            $this->form_validation->set_rules('txtpassword', 'contraseña', 'required|trim|min_length[5]|max_length[12]xss_clean');
+            $this->form_validation->set_message('required', 'El campo %s no debe estar vacio');
+            $this->form_validation->set_message('min_length', 'El campo %s  debe tener minimo 5 caracteres');
+            $this->form_validation->set_message('max_length', 'El  campo %s  debe tener maximo 12 caracteres');
+            
+
+
             if ($this->form_validation->run() === FALSE) {
                 $this->Login();
             } else {
                 $nombreusuario = $this->input->post('txtusuario');
                 $claveusuario = $this->input->post('txtpassword');
-               
+
                 $logueo = $this->usuario_model->iniciarSesion($nombreusuario, $claveusuario);
 
                 if ($logueo != FALSE) {
@@ -67,8 +73,8 @@ class UsuarioController extends CI_Controller {
                         'idUsuario' => $logueo->idUsuario,
                         'rol' => $logueo->RolUsuario_idRolUsuario,
                         'usuario' => $logueo->NombreUsuario,
-                        'apellidos'=>$logueo->nombreCompleto,
-                        'correo'=>$logueo->email
+                        'apellidos' => $logueo->nombreCompleto,
+                        'correo' => $logueo->email
                     );
                     $this->session->set_userdata($infouser);
                     $this->Login();
@@ -96,7 +102,7 @@ class UsuarioController extends CI_Controller {
         $info = array(
             'titulo' => 'Registro',
             'slogan' => '¡¡Hazme parte de ti!!',
-           'es_usuario_normal' =>TRUE,
+            'es_usuario_normal' => TRUE,
         );
         //clase para validar en codeigneiter 
         $this->load->library('form_validation');
@@ -132,25 +138,25 @@ class UsuarioController extends CI_Controller {
             }
             // cargar la vista
             $this->load->view('templates/header', $info);
-            $this->load->view('templates/menu',  $info);
+            $this->load->view('templates/menu', $info);
             $this->load->view('Usuario/Registro');
             $this->load->view('templates/footer');
         }
     }
+
     public function olvidarClave() {
         $info = array(
             'titulo' => 'Olvidar Clave',
             'slogan' => '¡¡Hazme parte de ti!!',
-           'es_usuario_normal' =>TRUE,
+            'es_usuario_normal' => TRUE,
         );
         // cargar la vista
-            $this->load->view('templates/header', $info);
-            $this->load->view('templates/menu', $info);
-            $this->load->view('Usuario/olvidoClave');
-            $this->load->view('templates/footer');
-        
-        
+        $this->load->view('templates/header', $info);
+        $this->load->view('templates/menu', $info);
+        $this->load->view('Usuario/olvidoClave');
+        $this->load->view('templates/footer');
     }
+
     public function recuperaClave() {
         
     }

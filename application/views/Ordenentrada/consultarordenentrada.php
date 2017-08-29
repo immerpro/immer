@@ -44,40 +44,17 @@
         <td width="200" height=""><b>Precio</b></td>
     </tr>
     <tr>
-        <td>ASXC</td>
-        <td>ABC</td>
-        <td>01/04/2012</td>
-        <td>72</td>
-        <td>2400</td>
+
+    <?php foreach ($entradas as $listadov): ?>
+    <td><?= $listadov['proveedor'] ?></td>
+    <td><?= $listadov['producto'] ?></td>
+    <td><?= $listadov['fecha'] ?></td>
+    <td><?= $listadov['cantidad'] ?></td>
+    <td><?= $listadov['precio'] ?></td>
+</tr>
+<?php endforeach; ?>
     </tr>
-    <tr>
-        <td>WERT</td>
-        <td>DVB</td>
-        <td>01/04/2012</td>
-        <td>12</td>
-        <td>1200</td>
-    </tr>
-    <tr>
-        <td>KOL</td>
-        <td>DFG</td>
-        <td>02/04/2012</td>
-        <td>4</td>
-        <td>2000</td>
-    </tr>
-    <tr>
-        <td>INTERN SAS</td>
-        <td>AVG</td>
-        <td>03/04/2012</td>
-        <td>6</td>
-        <td>1800</td>
-    </tr>
-    <tr>
-        <td>BOOM</td>
-        <td>TYU</td>
-        <td>04/04/2012</td>
-        <td>28</td>
-        <td>400</td>
-    </tr>
+   
     
 </table>
 

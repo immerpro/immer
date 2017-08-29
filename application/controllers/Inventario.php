@@ -6,6 +6,7 @@ class Inventario extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('inventario_model');
+        $this->load->model('Proveedor_model');
     }
 
     public function index() {
@@ -18,22 +19,18 @@ class Inventario extends CI_Controller {
             'cantAgotados' => $this->inventario_model->cantidadAgotados(),
             'cporAgotarse' => $this->inventario_model->cantidadXAgotarse(),
             'existenciaTotal' => $this->inventario_model->cantidadExistencia(),
-            'vendido' => $this->inventario_model->cantidadVendida(),
-            'CantidadSalida' => $this->inventario_model->cantidadSaliente(),
-            'cantidadEntrada' => $this->inventario_model->cantidadEntrante(),
             'mostrarVencidos' => $this->inventario_model->obtenerVencidos(),
             'mostrarAgotado' => $this->inventario_model->obtenerProductosAgotados(),
             'listXAgotarse' => $this->inventario_model->obtenerProductosXAgotarse(),
             'es_usuario_normal' => FALSE
-            
         ];
-        
+
         $this->load->view('templates/header', $data);
         $this->load->view('templates/menu', $data);
         $this->load->view('inventario/index');
         $this->load->view('templates/footer');
     }
-    
+
     public function mostrarNotificacionView() {
         if ($this->session->userdata('rol') == NULL || $this->session->userdata('rol') != 1) {
             redirect(base_url() . 'iniciar');
@@ -83,39 +80,36 @@ class Inventario extends CI_Controller {
                 switch ($this->input->post('cbomotivoNoti')) {
                     case "vencido":
                         $this->email->subject('ImmerPRO - Producto Vencido-' . date("d-M-Y"));
-                        $this->email->message($this->session->userdata('apellidos').'  tiene  '  . $vencido->cantVencido . '  productos vencidos .');
+                        $this->email->message($this->session->userdata('apellidos') . '  tiene  ' . $vencido->cantVencido . '  productos vencidos .');
                         break;
                     case "agotado":
                         $this->email->subject('ImmerPRO - Producto Agotados-' . date("d-M-Y"));
-                        $this->email->message($this->session->userdata('apellidos').' tiene  ' . $agotado->agotados . ' productos agotados.');
+                        $this->email->message($this->session->userdata('apellidos') . ' tiene  ' . $agotado->agotados . ' productos agotados.');
                         break;
                     case "proximoAgotado":
                         $this->email->subject('ImmerPRO - Producto Proximo a  Agotarse-' . date("d-M-Y"));
-                        $this->email->message($this->session->userdata('apellidos').' tiene ' . $porAgotarse->cuantoAgotarse . ' productos proximos a agotarse se sugiere realize un pedido de los productos.');
+                        $this->email->message($this->session->userdata('apellidos') . ' tiene ' . $porAgotarse->cuantoAgotarse . ' productos proximos a agotarse se sugiere realize un pedido de los productos.');
                         break;
                 }
 
                 if ($this->email->send()) {
-                  
-                     $this->load->view('mensajeEmail');
-                  
+
+                    $this->load->view('mensajeEmail');
                 } else {
-                   
-                     $this->load->view('mensajeEmail');
-                 
+
+                    $this->load->view('mensajeEmail');
                 }
             }
             if ($this->input->post('txtnoticelular') != "") {
                 echo "<script> alert('funcionalidad no disponible');</script>";
                 redirect('productos');
             }
-           
         }
     }
 
     public function OrdenSalida() {
         $data = ['titulo' => 'Orden Salida',
-            'lproducto' => $this->productos_model->obtenerProductos(),
+            'lsalida' => $this->inventario_model->ConsultarSalida(),
             'es_usuario_normal' => FALSE];
 
         $this->load->view('templates/header', $data);
@@ -135,32 +129,31 @@ class Inventario extends CI_Controller {
         $this->load->view('templates/footer');
     }
 
-     public function ordenentrada() {
-       
-        $data=['titulo'=> "ordenentrada",'es_usuario_normal' => FALSE];
+    public function ordenentrada() {
+
+        $data = ['titulo' => "ordenentrada", 'es_usuario_normal' => FALSE];
         $t['proveedor_select'] = $this->Proveedor_model->TraerDatos();
 
         // cargar la vista
         $this->load->view('templates/header', $data);
         $this->load->view('templates/menu', $data);
-        $this->load->view('Ordenentrada/ordenentrada',$t);
+        $this->load->view('Ordenentrada/ordenentrada', $t);
         $this->load->view('templates/footer');
     }
+
     public function consultarordenentrada() {
-       $data=['titulo'=> "Listado Entradas",'es_usuario_normal' => FALSE];
+        $data = ['titulo' => "Listado Entradas", 'es_usuario_normal' => FALSE, 'entradas' => $this->Ordenentrada_model->obtenerentrada()];
         // cargar la vista
         $this->load->view('templates/header', $data);
         $this->load->view('templates/menu', $data);
-        $this->load->view('Ordenentrada/consultarordenentrada');
+        $this->load->view('Ordenentrada/consultarordenentrada', $data);
         $this->load->view('templates/footer');
     }
 
+    public function NuevaOrdenDeEntrada() {
 
+        $data = ['titulo' => "nuevo orden de entrada", 'es_usuario_normal' => FALSE, 'proveedor_select' => $this->Proveedor_model->TraerDatos()];
 
-public function NuevaOrdenDeEntrada() {
-
-         $data=['titulo'=> "nuevo orden de entrada",'es_usuario_normal' => FALSE];
-        
         // cargar el helper de manejo de formularios
         $this->load->helper('form');
         // cargar libreria para validar formularios
@@ -168,19 +161,19 @@ public function NuevaOrdenDeEntrada() {
         /* asigno reglas de validacion 1parametro=> name del campo del formulario 
          * 2parametro=> titulo validacion 
           3parametro restricciones */
-        $this->form_validation->set_rules('txtCodUsuario', 'Codigo del usuario', 'required');
+
         $this->form_validation->set_rules('txtCodProv', 'Codigo del Proveedor', 'required');
         $this->form_validation->set_rules('txtPreentra', 'Precio entrada', 'required|numeric');
         $this->form_validation->set_rules('txtCantentra', 'cantidad Entrada', 'required|integer');
         $this->form_validation->set_rules('txtCodProduc', 'nombre Producto', 'required');
-        
+
 // FIN VALIDACION DETALLE
         // asignar mensajes
         // %s es el nombre del campo que ha fallado
         $this->form_validation->set_message('required', 'El campo %s es obligatorio');
         $this->form_validation->set_message('numeric', 'Ingrese numeros en el campo %s ');
         $this->form_validation->set_message('integer', 'Ingrese numeros en el campo %s ');
-       
+
         if ($this->form_validation->run() === FALSE) {
             $this->load->view('templates/header', $data);
             $this->load->view('templates/menu', $data);
@@ -188,14 +181,14 @@ public function NuevaOrdenDeEntrada() {
             $this->load->view('templates/footer');
         } else {
             // defino variables para ingresar los datos 
-            $codUsuario = trim($this->input->post('txtcodUsuario'));
+            $codUsuario = $this->session->userdata('idUsuario');
             $codProveedor = $this->input->post('txtCodProv');
             $precioEntrada = $this->input->post('txtPreentra');
             $cantEntrada = $this->input->post('txtCantentra');
             $codProducto = $this->input->post('txtCodProduc');
 
             // llamo al metodo para agregar productos y el detalle 
-            $ingresoNuevaordendeentrada = $this->Ordenentrada_model->registrarordenentrada($codUsuario,$codProveedor,$precioEntrada,$cantEntrada,$codProducto);
+            $ingresoNuevaordendeentrada = $this->Ordenentrada_model->registrarordenentrada($codUsuario, $codProveedor, $precioEntrada, $cantEntrada, $codProducto);
 
             if ($ingresoNuevaordendeentrada) {
                 //Sesion de una sola ejecución
@@ -209,19 +202,59 @@ public function NuevaOrdenDeEntrada() {
             $this->load->view('Ordenentrada/ordenentrada', $data);
             $this->load->view('templates/footer');
         }
-}
+    }
 
-//    public function asociarProveedor() {
-//
-//        if ($this->input->post('proveedor')) {
-//            $proveedor = $this->input->post('proveedor');
-//           
-//    }
-//    }
+ public function NuevaOrdenSalida() {
 
+        $data = ['titulo' => "Orden Salida", 'es_usuario_normal' => FALSE];
+
+        // cargar el helper de manejo de formularios
+        $this->load->helper('form');
+        // cargar libreria para validar formularios
+        $this->load->library('form_validation');
+        /* asigno reglas de validacion 1parametro=> name del campo del formulario 
+         * 2parametro=> titulo validacion 
+          3parametro restricciones */
+
+        $this->form_validation->set_rules('txtSalidaPro', 'nombre del producto', 'required');
+        $this->form_validation->set_rules('txtPreSalida', 'Precio salida', 'required|numeric');
+        $this->form_validation->set_rules('txtCantsalida', 'cantidad salida', 'required|integer');
+        $this->form_validation->set_rules('cboMotivo', 'motivo', 'required');
+
+// FIN VALIDACION DETALLE
+        // asignar mensajes
+        // %s es el nombre del campo que ha fallado
+        $this->form_validation->set_message('required', 'El campo %s es obligatorio');
+        $this->form_validation->set_message('numeric', 'Ingrese numeros en el campo %s ');
+        $this->form_validation->set_message('integer', 'Ingrese numeros en el campo %s ');
+
+        if ($this->form_validation->run() === FALSE) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/menu', $data);
+            $this->load->view('inventario/NuevaSalida', $data);
+            $this->load->view('templates/footer');
+        } else {
+            // defino variables para ingresar los datos 
+            $nombreproducto = $this->input->post('txtSalidaPro');
+            $precioSalida = $this->input->post('txtPreSalida');
+            $cantSalida = $this->input->post('txtCantsalida');
+            $motivo= $this->input->post('cboMotivo');
+            
+
+            // llamo al metodo para agregar productos y el detalle 
+            $ingresoNuevaordendeentrada = $this->inventario_model->registrarOrdenSalida($motivo, $precioSalida, $cantSalida, $nombreproducto);
+
+            if ($ingresoNuevaordendeentrada) {
+                //Sesion de una sola ejecución
+                $this->session->set_flashdata('correcto', 'se registro orden de salida correctamente');
+            } else {
+                $this->session->set_flashdata('incorrecto', 'Error en el registro');
             }
 
-
-
-
-
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/menu', $data);
+            $this->load->view('inventario/NuevaSalida', $data);
+            $this->load->view('templates/footer');
+        }
+    }
+}

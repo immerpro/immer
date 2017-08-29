@@ -26,7 +26,7 @@
                 <h5 class="title">SIGUENOS EN:</h5>
                 <ul>
                     <a href="https://www.facebook.com/profile.php?id=100017326595591" target="_blank"><button type="button" class="btn btn-fb btn btn-primary"><i class="fa fa-facebook left"></i> Facebook</button></a>  
-                   <a href="https://twitter.com/immerpro" target="_blank"><button type="button" class="btn btn-tw btn btn-info"><i class="fa fa-twitter left"></i> Twitter</button></a>  
+                    <a href="https://twitter.com/immerpro" target="_blank"><button type="button" class="btn btn-tw btn btn-info"><i class="fa fa-twitter left"></i> Twitter</button></a>  
                     <a href="https://plus.google.com/u/0/107704821156580446351" target="_blank"><button type="button" class="btn btn-gplus btn btn-warning"><i class="fa fa-google-plus left"></i> Google +</button></a>
                     <a href="https://www.youtube.com/channel/UC0UYz7Hd4MCww0bFkE1qLlg" target="_blank"><button type="button" class="btn btn-yt btn btn-danger"><i class="fa fa-youtube left"></i> Youtube</button></a>
                 </ul>
@@ -47,6 +47,11 @@
 
 </footer>
 
+<script>
+    $(document).ready(function () {
+        $('form').parsley();
+    });
+</script>
 <!--/.Footer-->
 
 <!-- /Start your project here-->

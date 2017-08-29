@@ -50,8 +50,8 @@ class ProductoController extends CI_Controller {
         $config['anchor_class'] = 'btn btn-dark-green btn-rounded'; //asignamos una clase a los links para maquetar
         $config['show_count'] = FALSE; //en true queremos ver Viendo 1 a 10 de 52
         $config['total_rows'] = $this->productos_model->cantidad_filas();
-        $config['per_page'] = 4; //-->número de productos por página
-        $config['num_links'] = 2; //-->número de links visibles
+        $config['per_page'] = 5; //-->número de productos por página
+        $config['num_links'] = 1; //-->número de links visibles
         $config['first_link'] = '&lsaquo; Primera'; //->configuramos 
         $config['last_link'] = 'Última &rsaquo;'; //--->y siguiente
         $config['full_tag_open'] = '<nav aria-label="Page navigation" class="flex-center"><ul class="pagination">';
@@ -92,14 +92,20 @@ class ProductoController extends CI_Controller {
             'cell_alt_end' => '</td>',
             'table_close' => '</table>'
         );
-
-        $this->table->set_template($template);
-        $this->table->set_heading('Producto', 'Descripción', 'Minimo Stock', 'Maximo Stock', 'Existencias', 'Acciones');
-        foreach ($this->productos_model->paginarProducto($config['per_page'], $numPag)as $productos_item) {
-            $this->table->add_row(
-                    $productos_item['NombreProducto'], $productos_item['DescripcionProducto'], $productos_item['minimoStock'], $productos_item['MaximoStock'], $productos_item['Existencias'], 'Modificar <a class="teal-text" href=' . base_url() . 'ProductoController/editar/' . $productos_item['idProducto'] . '><i class="fa fa-pencil "></i></a>'
-                    . nbs(3) . 'Inactivar <a class="red-text" href=' . base_url() . 'ProductoController/modal/' . $productos_item['idProducto'] . '><i class="fa fa-times" ></i></a>');
+        $listadoProducto = $this->productos_model->paginarProducto($config['per_page'], $numPag);
+        if ($listadoProducto) {
+            $this->table->set_template($template);
+            $this->table->set_heading('Producto', 'Descripción', 'Minimo Stock', 'Maximo Stock', 'Existencias', 'Acciones');
+            foreach ($listadoProducto as $productos_item) {
+                $this->table->add_row(
+                        $productos_item['NombreProducto'], $productos_item['DescripcionProducto'], $productos_item['minimoStock'], $productos_item['MaximoStock'], $productos_item['Existencias'], 'Modificar <a class="teal-text" href=' . base_url() . 'ProductoController/editar/' . $productos_item['idProducto'] . '><i class="fa fa-pencil "></i></a>'
+                        . nbs(3) . 'Inactivar <a class="red-text" href=' . base_url() . 'ProductoController/modal/' . $productos_item['idProducto'] . '><i class="fa fa-times" ></i></a>');
+            }
+        } else {
+            echo "<p class='lead'>No hay productos</p>";
+            
         }
+
 
         $this->jquery_pagination->initialize($config);
 

@@ -24,7 +24,7 @@
     <!-----------------MENU DE LA ADMINISTRACION ----------->
     <nav class="navbar navbar-expand-lg navbar-dark blue" role="navigation">
         <?php $atributo = array('class' => 'navbar-brand'); ?>
-        <?= anchor('iniciar', 'Immerpro', $atributo) ?>
+        <?= anchor('bienvenido', 'Immerpro', $atributo) ?>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
                 aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -35,10 +35,10 @@
                 <?php if ($es_usuario_normal): ?>
                     <!-----------------MENU USUARIO TE ASESORARÈ MUY BIEN!----------->
                     <li class="nav-item active">
-                        <a class="nav-link" href="#acerca"><i class=" fa fa-users"></i> Acerca <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="<?php echo site_url('bienvenido') ?>#acerca"><i class=" fa fa-users"></i> Acerca <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#contacto"><i class="fa fa-phone" aria-hidden="true"></i> Contacto</a>
+                        <a class="nav-link" href="<?php echo site_url('bienvenido') ?>#contacto"><i class="fa fa-phone" aria-hidden="true"></i> Contacto</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="<?php echo site_url('iniciar') ?>"><i class="fa fa-user-secret" aria-hidden="true"></i> Login</a>
