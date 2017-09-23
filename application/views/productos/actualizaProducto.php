@@ -31,7 +31,7 @@
         <div class="row">
             <div class="col-6">
                 <div class="md-form">
-                    <i class="fa fa-envelope prefix"></i>
+                    <i class="fa fa-cart-plus prefix"></i>
                     <input type="text" id="prod" class="form-control" name="txtNombProd" data-parsley-trigger="keyup" data-parsley-required-message="el campo no debe estar vacio" value="<?= $producto ?>">
                     <label for="prod">Producto</label>
                 </div> 
@@ -51,7 +51,7 @@
             </div>
             <div class="col-6">
                 <div class="md-form">
-                    <i class="fa fa-contao prefix"></i>
+                   <i class="fa fa-battery-1 prefix"></i>
                     <label for="minimo" >minimoStock</label>
                     <input type="text" name="txtMinimo"  id="minimo" class="form-control"  required data-parsley-type="number"  data-parsley-trigger="keyup" data-parsley-required-message="el campo no debe estar vacio" value="<?= $minStock ?>" /><br />
 
@@ -59,7 +59,7 @@
             </div>
             <div class="col-6">
                 <div class="md-form">
-                    <i class="fa fa-mixcloud prefix"></i>
+                    <i class="fa fa-battery-full fa-plus prefix"></i>
                     <label for="Maximo" >MaximoStock</label>
                     <input type="text" name="txtMaximo" id="Maximo" class="form-control" required data-parsley-type="number" data-parsley-trigger="keyup" data-parsley-required-message="el campo no debe estar vacio"  data-parsley-gt="#minimo" data-parsley-gt-message="debe ser mayor que el minimo" value="<?= $maxStock ?>"/><br />
 
@@ -68,34 +68,19 @@
 
             <div class="col-6">
                 <div class="md-form">
-                    <i class="fa fa-desktop prefix"></i>
+                  <i class="fa fa-battery-3 prefix"></i>
                     <label for="exist" >Existencias</label>
                     <input type="text" name="txtExits"  id="exist" class="form-control" required data-parsley-type="number" data-parsley-trigger="keyup" data-parsley-required-message="el campo no debe estar vacio" data-parsley-integer-message="debe ingresar numeros" value="<?= $exist ?>"/><br />
                 </div>
             </div>
-            <div class="col-6">
-                <div class="md-form">
-                    <i class="fa fa-barcode prefix"></i>
-                    <input type="text" 
-                           name="txtCodBarras" 
-                           id="CodigoDeBarras" 
-                           class="form-control" 
-                           required 
-                           data-parsley-type="number" 
-                           data-parsley-trigger="keyup" 
-                           data-parsley-required-message="el campo no debe estar vacio"
-
-                           value="<?= $codBarras ?>"/><br />        
-                    <label for="CodigoDeBarras" >Codigo de barras</label>
-                </div> 
-            </div>
+            <div class="col-6"></div>
             <div class="col-8">
                 <p class=" h5 teal-text">Si desea cambiar la subcategorìa del producto por favor seleccione una categorìa de lo contrario dar click en el boton actualizar producto</p><br>
 
             </div>
 
             <div class="col-6">
-                <label for="categoria" ><i class="fa fa-product-hunt prefix"></i> Categorìa <span class="badge badge-mdb-color h6"><?= $nombreCategoria->categoriaN ?></span></label>
+                <label for="categoria" > <i class="fa fa-briefcase fa-2x prefix"></i> Categorìa <span class="badge badge-mdb-color h6"><?= $nombreCategoria->categoriaN ?></span></label>
                 <select name="categoria" class="form-control md-form"  id="categoria" required data-parsley-trigger="keyup">
                     <option value="99">-seleccione una categoria-</option>
 
@@ -112,7 +97,7 @@
                 </select>
             </div>
             <div class="col-6">
-                <label for="subcategoria" > <i class="fa fa-product-hunt prefix"></i> Subcategorìa <span class="badge badge-mdb-color h6"><?= $nombreSub->NombreSubcategoria ?></span></label>
+                <label for="subcategoria" > <i class="fa fa-folder-o fa-2x prefix "></i> Subcategorìa <span class="badge badge-mdb-color h6"><?= $nombreSub->NombreSubcategoria ?></span></label>
                 <select name="subcategoria" id="subcatego" class="form-control" required data-parsley-trigger="keyup"  >
                     <?php if ($this->input->post('categoria') == 99): ?>
                         <option value="4">Lacteos</option>

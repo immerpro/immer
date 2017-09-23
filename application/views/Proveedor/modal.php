@@ -1,11 +1,12 @@
+<body style="background-image: url(<?php echo base_url().'/public/img/woman-1594711_1920.jpg';?>)">
 <?php echo form_open('proveedor/inactivar/' . $id); ?>
 <?php if ($this->session->flashdata('inactivo')): ?>
     <div class=" alert alert-danger" aria-label="Close"><?php echo $this->session->flashdata('inactivo'); ?> </div>
 <?php endif; ?>
 <?php if ($this->session->flashdata('activo')): ?>
-    <div class=" alert alert-success" aria-label="Close"><?php echo $this->session->flashdata('activo'); ?> </div> 
+    <div class=" alert alert-success" aria-label="Close"><?php echo $this->session->flashdata('activo'); ?> </div>
 <?php endif; ?>
-<div class="card " id="inactivo" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="inactivo" >
     <div class="modal-dialog modal-notify modal-danger" role="document">
         <div class="modal-content">
             <!--Header-->
@@ -20,7 +21,7 @@
 
                 <p class="black-text">El Proveedor <span class="badge badge-danger h5-responsive"><?=$nombrePro-> NombreProveedor ?></span>no se mostrara en el listado de proveedores</p>
 
-                <p class="black-text">¿ Desea continuar ?</p> 
+                <p class="black-text">¿ Desea continuar ?</p>
             </div>
             <!--Footer-->
             <div class="modal-footer">
@@ -30,12 +31,7 @@
         </div>
         <!--/.Content-->
     </div>
-</div>  
+</div>
 <?php echo form_close(); ?>
-<script type="text/javascript" src="<?PHP echo base_url() ?>public/js/jquery-3.1.1.min.js"></script>
-<!-- Bootstrap tooltips -->
-<script type="text/javascript" src="<?PHP echo base_url() ?>public/js/tether.min.js"></script>
-<!-- Bootstrap core JavaScript -->
-<script type="text/javascript" src="<?PHP echo base_url() ?>public/js/bootstrap.min.js"></script>
-<!-- MDB core JavaScript -->
-<script type="text/javascript" src="<?PHP echo base_url() ?>public/js/mdb.min.js"></script>
+
+</body>

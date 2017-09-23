@@ -64,11 +64,16 @@ $route['habilita'] = 'AdminController/habilitarColaboradores';
 $route['authCol'] = 'AdminController/colaboradorAutorizado';
 $route['recupera'] = 'UsuarioController/recuperaClave';
 $route['olvido'] = 'UsuarioController/olvidarClave';
+$route['AtualizarPerfil'] = 'AdminController/actualizarPerfilAdmin';
+$route['actualizarColaborador'] = 'ColaboradorController/actualizarPerfilCola';
+$route['recupera'] = 'UsuarioController/recuperaClaveUsuario';
+ $route['pagina(:num)'] ='ProductoController/pagina/$1';
 
 
 //fin rutas usuario
 // rutas para el producto
 $route['producto'] = 'ProductoController/index';
+$route['buscador'] = 'BuscadorController/index';
 $route['nuevoProducto'] = 'ProductoController/nuevoProducto';
 $route['editaProducto/'] = 'ProductoController/editar/';
 $route['productos/pagina'] = 'Product';//cuando sea la primera página
@@ -81,6 +86,7 @@ $route['productos/(:any)'] = 'productos/view/$1';
 $route['default_controller'] = 'UsuarioController';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+
 // rutas inventarios
 $route['salida'] = 'Inventario/OrdenSalida';
 $route['nuevaSalida'] = 'Inventario/CrearSalida';
@@ -92,4 +98,7 @@ $route['recuperadato'] = 'Reestablecer/index';
 $route['Entrada'] = 'Inventario/ordenentrada';
 $route['Consultar'] = 'Inventario/consultarordenentrada';
 $route['IngreseEntrada'] = 'Inventario/NuevaOrdenDeEntrada';
+// REPORTE DE INVENTARIOS 
+$route['reporte'] = 'ReporteController/index';
+
 

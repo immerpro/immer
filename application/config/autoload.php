@@ -58,7 +58,7 @@ $autoload['packages'] = array();
 |
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
-$autoload['libraries'] = array('database','session','form_validation');
+$autoload['libraries'] = array('database','session','form_validation','table','Jquery_pagination','email');
 
 /*
 | -------------------------------------------------------------------
@@ -89,7 +89,7 @@ $autoload['drivers'] = array();
 |
 |	$autoload['helper'] = array('url', 'file');
 */
-$autoload['helper'] = array('html','url_helper','form');
+$autoload['helper'] = array('html','url_helper','form','messages_flash');
 
 /*
 | -------------------------------------------------------------------
@@ -125,11 +125,11 @@ $autoload['language'] = array();
 | -------------------------------------------------------------------
 | Prototype:
 |
-|	$autoload['model'] = array('first_model', 'second_model');
+|	$autoload['model'] = array('first_model', 'second_model'); filter_input(INPUT_SERVER, 'HTTPS')
 |
 | You can also supply an alternative model name to be assigned
 | in the controller:
 |
 |	$autoload['model'] = array('first_model' => 'first');
 */
-$autoload['model'] = array('subcategoria_model','productos_model','detalle_model','categoria_model','Ordenentrada_model');
+$autoload['model'] = array('subcategoria_model','productos_model','categoria_model','Ordenentrada_model','usuario_model','inventario_model','Proveedor_model');

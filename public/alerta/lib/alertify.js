@@ -39,7 +39,7 @@
 			},
 			input   : "<input type=\"text\" class=\"alertify-text\" id=\"alertify-text\">",
 			message : "<p class=\"alertify-message\">{{message}}</p>",
-			log     : "<article class=\"alertify-log{{class}}\">{{message}}</article>"
+			log     : "<article class=\" flex-center alertify-log{{class}}\">{{message}}</article>"
 		};
 
 		/**
@@ -184,7 +184,7 @@
 				    type    = item.type,
 				    message = item.message;
 
-				html += "<div class=\"alertify-dialog\">";
+				html += "<div class=\"alertify-dialog flex-center\">";
 
 				if (type === "prompt") html += "<form id=\"alertify-form\">";
 

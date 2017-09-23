@@ -35,14 +35,10 @@ class Proveedor_model extends CI_Model {
             return FALSE;
         }
     }
-
-   
-       public function EditarProveedor($idProveedor, $data) {
+    public function EditarProveedor($idProveedor, $data) {
         $this->db->where('idProveedor', $idProveedor);
         $this->db->update('proveedor', $data);
     }
-    
-        
         public function obtener_nombre_proveedor($idProveedor) {
         $this->db->select('NombreProveedor');
         $this->db->from('proveedor');
@@ -54,14 +50,45 @@ class Proveedor_model extends CI_Model {
             return FALSE;
         }
     }
-    
-    
-      public function inactivarProveedor($idProveedor) {
+     public function inactivarProveedor($idProveedor) {
         $this->db->set('Estados_idEstados', 2, FALSE);
         $this->db->where('idProveedor', $idProveedor);
         $inactiva = $this->db->update('proveedor');
         return $inactiva;
     }
+     //METODOS PARA PAGINAR
+        public function paginarProveedor($limite, $numPag) {
+        $this->db->where('Estados_idEstados', 1);
+        $consulta = $this->db->get('proveedor', $limite, $numPag);
+        if ($consulta->num_rows() > 0) {
+
+            return $consulta->result_array();
+        }
+    }
+
+    public function cantidad_filas() {
+
+        $consulta = $this->db->get('proveedor');
+        return $consulta->num_rows();
+    }
+    // METODO PARA EL BUSCADOR
+     public function paginarProveedorFiltrado($limite, $numPag, $buscar_x_campo,$filtro) {
+        $this->db->like($filtro, $buscar_x_campo);
+        $this->db->where('Estados_idEstados', 1);
+        $consulta = $this->db->get('proveedor', $limite, $numPag);
+        if ($consulta->num_rows() > 0) {
+
+            return $consulta->result_array();
+        }
+    }
+
+    public function cantidad_filasFiltrado($buscar_x_campo,$filtro) {
+        $this->db->like($filtro, $buscar_x_campo);
+        $consulta = $this->db->get('proveedor',5);
+        return $consulta->num_rows();
+    }
+    
+
 
        
 }

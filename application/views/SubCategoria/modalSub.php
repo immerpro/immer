@@ -1,3 +1,4 @@
+<body style="background-image: url(<?php echo base_url().'/public/img/market3.jpg';?>)">
 <?php  if ($this->session->flashdata('inactivo')): ?>
             <div class=" alert alert-danger" aria-label="Close"><?php echo $this->session->flashdata('inactivo'); ?> </div>
 <?php endif; ?>
@@ -5,7 +6,8 @@
             <div class=" alert alert-success" aria-label="Close"><?php echo $this->session->flashdata('activo'); ?> </div> 
         <?php endif; ?>
  <?php echo form_open('subcategoria/InactivarSub/'.$id); ?>
-<div class="card " id="basicExample" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div style="height: 21vh"></div>
+            <div class="mx-4 hm-green-light">
     <div class="modal-dialog modal-notify modal-success" role="document">
         <!--Content-->
         <div class="modal-content">
@@ -39,4 +41,4 @@
 <script type="text/javascript" src="<?PHP echo base_url() ?>public/js/bootstrap.min.js"></script>
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="<?PHP echo base_url() ?>public/js/mdb.min.js"></script>
-
+</body>

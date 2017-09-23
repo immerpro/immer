@@ -2,7 +2,7 @@
     <section class="section" data-parsley-validate>
         <p class="display-4 orange-text flex-center">Nuevo Producto</p>
         <div style="height: 4vh"></div>
-        <?php echo form_open('nuevoProducto'); ?>
+        <?php echo form_open('ProductoController/nuevoProducto'); ?>
         <div class="row">
             <div class="col-8">
                 <?php if (validation_errors()): ?>
@@ -36,7 +36,7 @@
             <div class="col-6">
                 <div class="md-form">
                     <i class="fa fa-cart-plus prefix"></i>
-                    <input type="text" id="prod"  value="<?= set_value('txtNombProd') ?>" class="form-control" name="txtNombProd" data-parsley-trigger="keyup" data-parsley-required-message="el campo no debe estar vacio" data-parsley-required="true">
+                    <input type="text" id="prod"  class="form-control" name="txtNombProd" data-parsley-trigger="keyup" data-parsley-required-message="el campo no debe estar vacio" data-parsley-required="true">
                     <label for="prod">Producto</label>
                 </div> 
             </div>
@@ -47,7 +47,7 @@
                               data-parsley-required="true" 
                               data-parsley-trigger="keyup" 
                               data-parsley-required-message="el campo no debe estar vacio">
-                                  <?= trim(set_value('txtDescripcion')) ?>
+                                  
                     </textarea>
                     <label for="descrip">Descripciòn</label>
                 </div>
@@ -83,27 +83,29 @@
                     <input type="text" name="txtExits"  id="exist" class="form-control" required data-parsley-type="number" data-parsley-trigger="keyup" data-parsley-required-message="el campo no debe estar vacio" data-parsley-integer-message="debe ingresar numeros" value="<?= set_value('txtExits') ?>"/><br />
                 </div>
             </div>
-            <div class="col-6">
+           <div class="col-6">
                 <div class="md-form">
                     <i class="fa fa-barcode prefix"></i>
-                    <input type="text" 
-                           name="txtCodBarras" 
-                           id="CodigoDeBarras" 
-                           class="form-control" 
-                           required 
-                           data-parsley-type="number" 
-                           data-parsley-trigger="keyup" 
+                    <input type="text"
+                           name="txtCodBarras"
+                           id="CodigoDeBarras"
+                           class="form-control"
+                           required
+                           data-parsley-type="number"
+                           data-parsley-trigger="keyup"
+                           data-parsley-minlength="13"
+                           data-parsley-maxlength="13"
                            data-parsley-required-message="el campo no debe estar vacio"
 
-                           value="<?= set_value('txtCodBarras') ?>"/><br />        
+                           /><br />
                     <label for="CodigoDeBarras" >Codigo de barras</label>
-                </div> 
+                </div>
             </div>
             <div class="col-6">
                 <div class="md-form">
                     <i class="fa fa-product-hunt prefix"></i>
                     <label for="txtLote" >Lote</label>
-                    <input type="text" name="txtLote" class="form-control" data-parsley-required="true" data-parsley-trigger="keyup" data-parsley-required-message="el campo no debe estar vacio" value="<?= set_value('txtLote') ?>"/><br /> 
+                    <input type="text" name="txtLote" class="form-control " data-parsley-required="true" data-parsley-trigger="keyup" data-parsley-required-message="el campo no debe estar vacio" value="<?= set_value('txtLote') ?>"/><br /> 
 
                 </div>  
             </div>

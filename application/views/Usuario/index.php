@@ -67,8 +67,6 @@
                 <!--Card-->
                 <div class="card">
 
-
-
                     <!--Card image-->
                     <div class="view overlay hm-white-slight">
                         <img  class="imagencard" src="<?PHP echo base_url(); ?>/public/img/woman_market.jpg">

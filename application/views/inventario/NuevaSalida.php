@@ -26,21 +26,24 @@
                     </div>
 
                 <?php endif; ?>
-
-
             </div>
-
-
         </div>
         <div class="row">
             <div class="col-6">
                 <div class="md-form">
                     <i class="fa fa-cart-plus prefix"></i>
-                    <input type="text" id="snombP" class="form-control validate" name="txtSalidaPro">
+                    <input type="text" id="snombP" class="form-control validate" name="txtProducto">
                     <label for="snombP" data-error="wrong" data-success="right"></i> Nombre Producto: </label>
+                    <div style="height: 5vh"></div>
                 </div> 
             </div>
-            <div style="height: 3vh"></div>
+            <script>
+                $(function () {
+                    $("#snombP").autocomplete({
+                        source: "<?php base_url() ?>inventario/get_producto" // path to the get_birds method
+                    });
+                });
+            </script>
             <div class="col-6">
                 <div class="md-form">
                     <i class="fa fa-cubes prefix"></i>
@@ -48,8 +51,6 @@
                     <label for="cants" data-error="wrong" data-success="right">Cantidad Salida:</label>
                 </div>
             </div>
-<div style="height: 3vh"></div>
-
             <div class="col-6">
                 <div class="md-form">
                     <i class="fa fa-money prefix"></i>
@@ -57,23 +58,19 @@
                     <label for="snombP" data-error="wrong" data-success="right"> Precio Salida</label>
                 </div>  
             </div>
-            <div style="height: 3vh"></div>
+
             <div class="col-6">
                 <div >
                     <label for="snombP" data-error="wrong" data-success="right"> <i class="fa fa-list-alt"></i> Motivo Salida</label>
-                                                                  
+
                     <select class="form-control" name="cboMotivo">
                         <option value="merma">Merma</option>
                         <option value="devolucion"> devolucion proveedor</option>
                         <option value="venta">venta</option>
-                        <option value="vencimiento">producto vencido</option>
+                      
                     </select>
                 </div>  
             </div>
-
-
-            <div style="height: 3vh"></div>
-
 
         </div>
         <div class="row">

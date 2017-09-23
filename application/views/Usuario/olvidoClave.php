@@ -6,36 +6,40 @@
 
         <?php echo form_open('recupera'); ?>
         <div class="row">
-            <div class="col-lg-6 ">
-                <div class="alert-danger"><?php echo validation_errors(); ?></div> 
-            </div>
-            <div class="col-lg-6">
-                <?php if ($this->session->flashdata('usuario_mal')): ?>
-                    <div class="alert alert-success"><?= $this->session->flashdata('usuario_mal') ?></div> 
-                <?php endif; ?>
-            </div>
+            <?PHP
+          messages_flash('red',validation_errors(),'Errores del formulario', true);
+		
+			//si hay error enviando el email
+			messages_flash('red','not_email_send','Error enviando el email');
 
+			//si se ha enviando el email correctamente
+			messages_flash('success-color','mail_send','Email enviado correctamente');
+
+			//si hay error enviando el email
+			messages_flash('deep-orange','expired_request','Error recuperación password');
+
+			//si hay error modificando el password lo mostramos
+			messages_flash('red','error_password_changed','Error modificando el password');
+			
+			//si se ha modificado el password correctamente
+			messages_flash('success-color','password_changed','Password modificado correctamente');
+		?>
         </div>
 
         <div class="row">
             <div class="col-lg-3"></div>
             <div class=" col col-6">
                 <div class="md-form">
-                    <i class="fa fa-user fa-3x prefix" aria-hidden="true" ></i>
+                    <i class="fa fa-envelope-square fa-3x prefix" aria-hidden="true" ></i>
                     
-                    <input type="text" id="user" class="form-control" name="txtusuario" data-parsley-required="true" 
+                    <input type="email" id="userMail" class="form-control" name="txtusuarioEmail" data-parsley-required="true" data-parsley-type="email"
                               data-parsley-trigger="keyup" >
 
-                    <label for="user" >Usuario</label>
+                    <label for="userMail" >Email</label>
                 </div>
                 <div style="height: 2vh"></div>
-                <div class="md-form">
-                    <i class="fa fa-lock fa-3x prefix" aria-hidden="true"></i>
-                    <input type="password" id="pass" class="form-control" name="txtOlvidopassword" data-parsley-required="true" 
-                              data-parsley-trigger="keyup">
-                    <label for="pass" > Nueva Contraseña</label>
-                </div>
-                <button type="submit" class="btn btn-orange waves-effect orange" name="btnRecuperaClave" > <i class='fa fa-send'> </i>  Recuperar Contraseña</button>
+               
+                <button type="submit" class="btn btn-orange waves-effect orange" name="btnRecuperaClave" > <i class='fa fa-lock'> </i> Recuperar Contraseña</button>
                
 
             </div> 

@@ -23,9 +23,13 @@ class SubCategoria extends CI_Controller {
     }
 
     public function index() {
+                 if ($this->session->userdata('rol') == NULL || $this->session->userdata('rol') != 1) {
+            redirect(base_url() . 'iniciar');
+        }
         // usamos la clase SubCategoria y llamamos al metodo que obtiene todas las Subcategorias
         $data['Subcategorias'] = $this->subcategoria_model->obtenerSubCategorias();
         $data['titulo'] = "Subcategoria";
+         $data ['perfil'] = $this->usuario_model->consultarPerfil($this->session->userdata('idUsuario'));
         // cargar la vista
         $this->load->view('templates/header', $data);
         $this->load->view('templates/menu', $data);
@@ -34,6 +38,9 @@ class SubCategoria extends CI_Controller {
     }
 
     public function SubInCategoria() {
+        if ($this->session->userdata('rol') == NULL || $this->session->userdata('rol') != 1) {
+            redirect(base_url() . 'iniciar');
+        }
 //         $mostrarNombre= $this->categoria_model->nombrecategoria($this->uri->segment(3));
 //             foreach ($mostrarNombre->result() as $fila) {
 //            $nombreCategoria = $fila->NombreCategoria;
@@ -41,7 +48,9 @@ class SubCategoria extends CI_Controller {
         $data = ['titulo' => 'agregar subcategoria',
             'codcategoria' => $this->uri->segment(3),
             'nombrecategoria' => 'sub',
-             'es_usuario_normal' => FALSE];
+             'es_usuario_normal' => FALSE,
+            'perfil' => $this->usuario_model->consultarPerfil($this->session->userdata('idUsuario'))
+            ];
 
         //$data['categorias'] = $this->categoria_model->obtenerCategorias();
         $this->load->helper('form');
@@ -76,9 +85,12 @@ class SubCategoria extends CI_Controller {
     }
 
     public function editarSub() {
+if ($this->session->userdata('rol') == NULL || $this->session->userdata('rol') != 1) {
+            redirect(base_url() . 'iniciar');
+        }
 
-
-        $dato=['titulo'=>" Editar SubCategoria", 'es_usuario_normal' => FALSE];
+        $dato=['titulo'=>" Editar SubCategoria", 'es_usuario_normal' => FALSE,
+           'perfil' => $this->usuario_model->consultarPerfil($this->session->userdata('idUsuario')) ];
         $idSubCategoria = $this->uri->segment(3);
         $obtenerSubCategoria = $this->subcategoria_model->modificar_subcategoria($idSubCategoria);
 
@@ -109,7 +121,9 @@ class SubCategoria extends CI_Controller {
     }
 
     public function actualizarsub() {
-
+if ($this->session->userdata('rol') == NULL || $this->session->userdata('rol') != 1) {
+            redirect(base_url() . 'iniciar');
+        }
         $idsub = $this->uri->segment(3);
         $subcategoria_a_modificar = array(
             'NombreSubcategoria' => $this->input->post('NombreSubcategoria'),
@@ -130,6 +144,9 @@ class SubCategoria extends CI_Controller {
     }
 
     public function modalSub() {
+        if ($this->session->userdata('rol') == NULL || $this->session->userdata('rol') != 1) {
+            redirect(base_url() . 'iniciar');
+        }
         $idsubCategoria = $this->uri->segment(3);
         $mostrarNombre = $this->subcategoria_model->nombresubcategoria($idsubCategoria);
         foreach ($mostrarNombre->result() as $fila) {
@@ -147,7 +164,9 @@ class SubCategoria extends CI_Controller {
     }
 
     public function InactivarSub() {
-
+if ($this->session->userdata('rol') == NULL || $this->session->userdata('rol') != 1) {
+            redirect(base_url() . 'iniciar');
+        }
         $idsub = $this->uri->segment(3);
         $inactivasub = $this->subcategoria_model->inactivarSubcategoria($idsub);
         if ($inactivasub == TRUE) {
