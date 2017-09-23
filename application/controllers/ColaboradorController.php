@@ -42,6 +42,13 @@ class ColaboradorController extends CI_Controller {
             redirect(base_url() . 'iniciar');
         }
 //        $id = $this->uri->segment(3);
+         $this->form_validation->set_rules('txtemail', 'correo', 'required|valid_email|is_unique[usuario.email]');
+        $this->form_validation->set_rules('txtusuarioco', 'usuario', 'required|is_unique[usuario.NombreUsuario]');
+        $this->form_validation->set_message('is_unique', 'El  campo %s ya existe en el sistema ');
+        
+         if ($this->form_validation->run() === FALSE) {
+             $this->mostrarPerfilColaborador();
+         }else{
         $actualizarco = array(
             'nombreCompleto' => $this->input->post('txtNombCompl'),
             'NombreUsuario'=> $this->input->post('txtusuarioco'),
@@ -53,5 +60,5 @@ class ColaboradorController extends CI_Controller {
         $this->usuario_model->atualizarperfil($idUsuario, $actualizarco);
         redirect('colaborador');
     }
-
+}
 }

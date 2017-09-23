@@ -4,19 +4,15 @@
         height: 200px;
     }
 </style>
+
 <h1 class="h1-responsive text-center orange-text">Perfil Administrador </h1>
 <!-- ****** Team Section****** -->
 
 <div class="container flex-center flex-lg-column m-5">
 
     <section class="section" >
-        <div class="row"> <div class="col col-lg-11"></div>
+         <div class="col col-lg-11"></div>
             <div class="row">
-
-                <div class="col-6 ">
-                    <span class="alert-danger close"><?php echo validation_errors(); ?></span> 
-                </div>
-
                 <div class="col-md-10">
                     <div class="card testimonial-card">
                         <!--Avatar-->
@@ -58,5 +54,21 @@
 
 
     </section>
+    
+
 
 </div>
+ <div class="row flex-center">
+            <div class="col-8">
+                <?php if (validation_errors()): ?>
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <?php echo validation_errors(); ?> 
+
+                    </div>
+                <?php endif; ?>
+                
+
+
+        </div>
+  </div>

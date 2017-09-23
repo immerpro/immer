@@ -4,12 +4,11 @@ class UsuarioController extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        
     }
 
     //  vista pagina principal
     public function index() {
-        
+
         $informacion = array('titulo' => 'immerpro',
             'slogan' => 'Bienvenido',
             'es_usuario_normal' => TRUE);
@@ -23,7 +22,7 @@ class UsuarioController extends CI_Controller {
     public function Login() {
 
         switch ($this->session->userdata('rol')) {
-            
+
             case '':
                 $data = array('token' => $this->tokenLogin(),
                     'titulo' => 'login',
@@ -41,7 +40,7 @@ class UsuarioController extends CI_Controller {
                 redirect(base_url() . 'colaborador');
                 break;
             default:
-                
+
                 $data = array('titulo' => 'login', 'slogan' => '¡¡Hazme parte de ti!!',
                     'es_usuario_normal' => TRUE);
                 $this->load->view('templates/header', $data);
@@ -54,8 +53,8 @@ class UsuarioController extends CI_Controller {
 
 // validar el ingreso del usuario
     public function ingresoUsuario() {
-        
-        
+
+
         $this->load->library('form_validation');
         if ($this->input->post('token') && $this->input->post('token') == $this->session->userdata('token')) {
 
@@ -67,14 +66,13 @@ class UsuarioController extends CI_Controller {
 
             if ($this->form_validation->run() === FALSE) {
                 $this->Login();
-                
             } else {
-                
+
                 $nombreusuario = $this->input->post('txtusuario');
                 $claveusuario = $this->input->post('txtpassword');
                 $logueo = $this->usuario_model->iniciarSesion($nombreusuario, $claveusuario);
                 if ($logueo != FALSE) {
-                    
+
                     $infouser = array(
                         'esta_logueado' => true,
                         'idUsuario' => $logueo->idUsuario,
@@ -85,7 +83,6 @@ class UsuarioController extends CI_Controller {
                     );
                     $this->session->set_userdata($infouser);
                     $this->Login();
-                    
                 }
             }
         } else {
@@ -101,15 +98,14 @@ class UsuarioController extends CI_Controller {
         $this->session->set_userdata('token', $token);
         return $token;
     }
+
     /**
- * @desc - genera un token para cada usuario registrado
- * @return token
- */
- private function token()
-    {
-        return sha1(uniqid(rand(),true));
+     * @desc - genera un token para cada usuario registrado
+     * @return token
+     */
+    private function token() {
+        return sha1(uniqid(rand(), true));
     }
- 
 
     public function cerrarsesion() {
         $this->session->unset_userdata($this->session->userdata('rol'));
@@ -119,7 +115,7 @@ class UsuarioController extends CI_Controller {
 
     // registro de los usuarios por el admin
     public function RegistroUsuario() {
-                 if ($this->session->userdata('rol') == NULL || $this->session->userdata('rol') != 1) {
+        if ($this->session->userdata('rol') == NULL || $this->session->userdata('rol') != 1) {
             redirect(base_url() . 'iniciar');
         }
 
@@ -187,7 +183,7 @@ class UsuarioController extends CI_Controller {
     }
 
     public function recuperaClaveUsuario() {
-         date_default_timezone_set('America/Bogota');
+        date_default_timezone_set('America/Bogota');
         $this->form_validation->set_rules(
                 'txtusuarioEmail', 'correo electronico', 'required|trim|valid_email|callback_comprobar_email'
         );
@@ -229,7 +225,7 @@ class UsuarioController extends CI_Controller {
      * @desc - renderiza la vista recuperacion de clave
      */
     public function recuperacionClaveXEmail($token = "") {
-          date_default_timezone_set('America/Bogota');
+        date_default_timezone_set('America/Bogota');
         //si el password ha caducado
 
         if ($this->comprobarToken($token) === FALSE) {
@@ -314,7 +310,7 @@ class UsuarioController extends CI_Controller {
         $this->email->subject('Recuperación de password en nuestra plataforma');
 
         $html = '<h2>Pulsa  o copia y pega el siguiente enlace  en el navegador  para recuperar la clave </h2><hr><br>';
-        $html .= '<a  href="'.base_url().'UsuarioController/recuperacionClaveXEmail/'.$userdata->token.'">';
+        $html .= '<a  href="' . base_url() . 'UsuarioController/recuperacionClaveXEmail/' . $userdata->token . '">';
         $html .= base_url() . 'UsuarioController/recuperacionClaveXEmail/' . $userdata->token . '</a>';
 
         $this->email->message($html);
@@ -322,6 +318,30 @@ class UsuarioController extends CI_Controller {
         if ($this->email->send()) {
             return TRUE;
         }
+    }
+
+    // 
+    public function contactar() {
+        $nombre = $this->input->post("txtnombre");
+        $email1 = $this->input->post("txtemail");
+        $asunto = $this->input->post("txtAsunto");
+        $mensaje = $this->input->post("txtMensaje");
+        
+        $this->email->from($email1,$nombre );
+        $this->email->to('immerpro2018@gmail.com');
+        $this->email->subject($asunto);
+
+        $html = ' El Usuario '.$nombre. ' dejo el siguiente mensaje <font size="2" face="Arial" color="blue">'.$mensaje.'</font>';
+       
+
+        $this->email->message($html);
+
+        if ($this->email->send()) {
+           $this->load->view('mensaje/mensajeEmail');
+        } else {
+            $this->load->view('mensaje/mensajeError');
+        }
+        
     }
 
 }
