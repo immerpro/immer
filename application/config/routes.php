@@ -51,39 +51,38 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   |		my-controller/my-method	-> my_controller/my_method
  */
 
-// rutas asociadas al usuario bienvenido#contacto
+// rutas asociadas al usuario 
 $route['bienvenido'] = 'UsuarioController/index';
 $route['iniciar'] = 'UsuarioController/Login';
 $route['ingresar'] = 'UsuarioController/ingresoUsuario';
 $route['registro'] = 'UsuarioController/RegistroUsuario';
 $route['salir'] = 'UsuarioController/cerrarsesion';
+$route['recupera'] = 'UsuarioController/recuperaClave';
+$route['olvido'] = 'UsuarioController/olvidarClave';
+$route['recupera'] = 'UsuarioController/recuperaClaveUsuario';
+
+$route['contacto'] = 'UsuarioController/contactar';
+// ruta asociada colaborador
 $route['colaborador'] = 'ColaboradorController/index';
 $route['perfilcolabora'] = 'ColaboradorController/mostrarPerfilColaborador';
+$route['actualizarColaborador'] = 'ColaboradorController/actualizarPerfilCola';
+// ruta asociada administrador
 $route['admin'] = 'AdminController/index';
 $route['perfiladmin'] = 'AdminController/mostrarPerfilAdmin';
 $route['habilita'] = 'AdminController/habilitarColaboradores';
 $route['authCol'] = 'AdminController/colaboradorAutorizado';
-$route['recupera'] = 'UsuarioController/recuperaClave';
-$route['olvido'] = 'UsuarioController/olvidarClave';
 $route['AtualizarPerfil'] = 'AdminController/actualizarPerfilAdmin';
-$route['actualizarColaborador'] = 'ColaboradorController/actualizarPerfilCola';
-$route['recupera'] = 'UsuarioController/recuperaClaveUsuario';
-$route['pagina(:num)'] = 'ProductoController/pagina/$1';
-$route['contacto'] = 'UsuarioController/contactar';
-
-
 //fin rutas usuario
 // rutas para el producto
 $route['producto'] = 'ProductoController/index';
 $route['buscador'] = 'BuscadorController/index';
 $route['nuevoProducto'] = 'ProductoController/nuevoProducto';
 $route['editaProducto/'] = 'ProductoController/editar/';
-$route['productos/pagina'] = 'Product'; //cuando sea la primera página
-$route['productos/pagina/(:num)'] = 'Product'; //cuando no sea la primera página
 $route['inactivo/(:num)'] = 'ProductoController/modal/$1';
+$route['pagina(:num)'] = 'ProductoController/pagina/$1';
 //fin rutas producto
 $route['subcategoria/crear'] = 'subcategoria/SubInCategoria';
-$route['categoria/crear'] = 'categoria/InCategoria';
+$route['categoria/crear'] = 'CategoriaController/InCategoria';
 $route['productos/(:any)'] = 'productos/view/$1';
 $route['default_controller'] = 'UsuarioController';
 $route['404_override'] = '';
@@ -102,5 +101,10 @@ $route['Consultar'] = 'Inventario/consultarordenentrada';
 $route['IngreseEntrada'] = 'Inventario/NuevaOrdenDeEntrada';
 // REPORTE DE INVENTARIOS 
 $route['reporte'] = 'ReporteController/index';
+$route['migracion'] = 'MigracionController/index';
+$route['db'] = 'MigracionController/crearbd';
+// ruta  categoria
+$route['categoria'] = 'CategoriaController/index';
+
 
 

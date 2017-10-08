@@ -1,19 +1,9 @@
 <?php
-
-class Categoria extends CI_Controller {
-
-    //put your code here
+class CategoriaController extends CI_Controller {
     public function __construct() {
         parent::__construct();
-        $this->load->model('categoria_model');
-        $this->load->model('subcategoria_model');
-        $this->load->helper('url_helper');
-        // CARGO LA LIBRERIA DE LA PAGINACION
-        $this->load->library('Jquery_pagination');
-        // usaremos la libreria para crear la tabla
-        $this->load->library('table');
+       
     }
-
     public function index($numPag = 0) {
         if ($this->session->userdata('rol') == NULL || $this->session->userdata('rol') != 1) {
             redirect(base_url() . 'iniciar');
@@ -22,7 +12,6 @@ class Categoria extends CI_Controller {
         //creamos la salida del html a la vista con ob_get_contents
         //que lo que hace es imprimir el html
         $buscarCategoria = $this->input->post('txtbuscar');
-
         if ($buscarCategoria == "") {
             ob_start();
             $this->pagina(0);
@@ -34,7 +23,6 @@ class Categoria extends CI_Controller {
             $initial_content = ob_get_contents();
             ob_end_clean();
         }
-
         //asignamos $initial_content al array data para pasarlo a la vista
         //y así poder mostrar tanto los links como la tabla
         // datos para inactivar un producto
@@ -52,10 +40,8 @@ class Categoria extends CI_Controller {
         $this->load->view('Categoria/index', $data);
         $this->load->view('templates/footer');
     }
-
     public function pagina($numPag = 0) {
-
-        $config['base_url'] = base_url('Categoria/pagina/');
+        $config['base_url'] = base_url('CategoriaController/pagina/');
         $config['div'] = '#pagina'; //asignamos un id al contenedor general
         $config['anchor_class'] = 'btn btn-dark-green btn-rounded'; //asignamos una clase a los links para maquetar
         $config['show_count'] = FALSE; //en true queremos ver Viendo 1 a 10 de 52
@@ -80,7 +66,6 @@ class Categoria extends CI_Controller {
         $config['num_tag_close'] = '</li>';
         $config['first_link'] = '« primero';
         $config['last_link'] = '» ùltimo';
-
         $template = array(
             'table_open' => '<table class="table table-striped table-bordered table-hover">',
             'thead_open' => '<thead >',
@@ -107,23 +92,27 @@ class Categoria extends CI_Controller {
             $this->table->set_heading('Nombre Categoria', 'Detalles', 'Acciones Subcategoria', 'Acciones Categoria');
             foreach ($listadoCategoria as $categoria_item) {
                 $this->table->add_row(
-                        $categoria_item->NombreCategoria, $categoria_item->detalles, 'Mira <a class="orange-text" href=' . base_url() . 'Categoria/Ver/' . $categoria_item->idCategoria . ' ><i class="fa fa-eye" onmouseover="Subcategoria"></i></a>' .
-                        ' Agrega <a class="blue-text"  href=' . base_url() . 'Categoria/Agregar/' . $categoria_item->idCategoria . '><i class="fa fa-plus"></i></a>', 'Modificar <a class="teal-text" href=' . base_url() . 'Categoria/editar/' . $categoria_item->idCategoria . '><i class="fa fa-pencil "></i></a>'
-                        . nbs(3) . 'Inactivar <a class="red-text" href=' . base_url() . 'Categoria/modal/' . $categoria_item->idCategoria . '><i class="fa fa-times" ></i></a>');
+                        $categoria_item->NombreCategoria,
+                         $categoria_item->detalles, 
+                         'Mira <a class="orange-text" href=' . base_url() . 'CategoriaController/Ver/' . $categoria_item->idCategoria . ' ><i class="fa fa-eye" onmouseover="Subcategoria"></i></a>' .
+                        ' Agrega <a class="blue-text"  href=' . base_url() . 'CategoriaController/Agregar/' . $categoria_item->idCategoria . '><i class="fa fa-plus"></i></a>', 'Modificar <a class="teal-text" href=' . base_url() . 'Categoria/editar/' . $categoria_item->idCategoria . '><i class="fa fa-pencil "></i></a>'
+                        . nbs(3) . 'Inactivar <a class="red-text" href=' . base_url() . 'CategoriaController/modal/' . $categoria_item->idCategoria . '><i class="fa fa-times" ></i></a>');
+
             }
+            $this->jquery_pagination->initialize($config);
+            //cargamos la paginación con los links
+            $html = $this->table->generate() .
+                    $this->jquery_pagination->create_links();
+            echo $html;
         } else {
             echo "<p class='lead'>No hay Categorias creadas</p>";
         }
-        $this->jquery_pagination->initialize($config);
-        //cargamos la paginación con los links
-        $html = $this->table->generate() .
-                $this->jquery_pagination->create_links();
-        echo $html;
+       
     }
 
     public function paginacategoria($numPag = 0) {
         $buscar_x_campo = $this->input->post('txtbuscar');
-        $config['base_url'] = base_url('Categoria/paginacategoria/');
+        $config['base_url'] = base_url('CategoriaController/paginacategoria/');
         $config['div'] = '#pagina'; //asignamos un id al contenedor general
         $config['anchor_class'] = 'btn btn-dark-green btn-rounded'; //asignamos una clase a los links para maquetar
         $config['show_count'] = FALSE; //en true queremos ver Viendo 1 a 10 de 52
@@ -148,7 +137,6 @@ class Categoria extends CI_Controller {
         $config['num_tag_close'] = '</li>';
         $config['first_link'] = '« primero';
         $config['last_link'] = '» ùltimo';
-
         $template = array(
             'table_open' => '<table class="table table-striped table-bordered table-hover">',
             'thead_open' => '<thead >',
@@ -175,26 +163,28 @@ class Categoria extends CI_Controller {
             $this->table->set_heading('Nombre Categoria', 'Detalles', 'Acciones Subcategoria', 'Acciones Categoria');
             foreach ($listadoCategoria as $categoria_item) {
                 $this->table->add_row(
-                        strip_tags($categoria_item->NombreCategoria), $categoria_item->detalles, 'Mira <a class="orange-text" href=' . base_url() . 'Categoria/Ver/' . $categoria_item->idCategoria . ' ><i class="fa fa-eye" onmouseover="Subcategoria"></i></a>' .
-                        ' Agrega <a class="blue-text"  href=' . base_url() . 'Categoria/Agregar/' . $categoria_item->idCategoria . '><i class="fa fa-plus"></i></a>', 'Modificar <a class="teal-text" href=' . base_url() . 'Categoria/editar/' . $categoria_item->idCategoria . '><i class="fa fa-pencil "></i></a>'
-                        . nbs(3) . 'Inactivar <a class="red-text" href=' . base_url() . 'Categoria/modal/' . $categoria_item->idCategoria . '><i class="fa fa-times" ></i></a>');
+                        strip_tags($categoria_item->NombreCategoria), 
+                        $categoria_item->detalles,
+                        'Mira <a class="orange-text" href=' . base_url() . 'CategoriaController/Ver/' . $categoria_item->idCategoria . ' ><i class="fa fa-eye" onmouseover="Subcategoria"></i></a>' .
+                        ' Agrega <a class="blue-text"  href=' . base_url() . 'CategoriaController/Agregar/' . $categoria_item->idCategoria . '><i class="fa fa-plus"></i></a>', 'Modificar <a class="teal-text" href=' . base_url() . 'Categoria/editar/' . $categoria_item->idCategoria . '><i class="fa fa-pencil "></i></a>'
+                        . nbs(3) . 'Inactivar <a class="red-text" href=' . base_url() . 'CategoriaController/modal/' . $categoria_item->idCategoria . '><i class="fa fa-times" ></i></a>');
             }
+            $this->jquery_pagination->initialize($config);
+            //cargamos la paginación con los links
+            $html = $this->table->generate() .
+                    $this->jquery_pagination->create_links();
+            echo $html;
         } else {
             echo "<p class='lead'>No hay Categorias creadas</p>";
         }
-
-        $this->jquery_pagination->initialize($config);
-        //cargamos la paginación con los links
-        $html = $this->table->generate() .
-                $this->jquery_pagination->create_links();
-        echo $html;
+      
     }
-
+    // ingresar categorias
     public function InCategoria() {
         if ($this->session->userdata('rol') == NULL || $this->session->userdata('rol') != 1) {
             redirect(base_url() . 'iniciar');
         }
-        $data['categorias'] = $this->categoria_model->obtenerCategorias();
+        $data['categorias'] = $this->categoria_model->traerCategorias();
         $data['titulo'] = " crear categoria";
         $data['Mensaje'] = "Categoria creada correctamente";
         $data['es_usuario_normal'] = FALSE;
@@ -221,7 +211,7 @@ class Categoria extends CI_Controller {
             $this->load->view('templates/footer');
         }
     }
-
+    // ver las subcategorias asociadas a una categoria
     public function ver($id) {
         if ($this->session->userdata('rol') == NULL || $this->session->userdata('rol') != 1) {
             redirect(base_url() . 'iniciar');
@@ -230,14 +220,12 @@ class Categoria extends CI_Controller {
         $data['titulo'] = " ver subcategoria";
         $data['es_usuario_normal'] = FALSE;
         $data['perfil'] = $this->usuario_model->consultarPerfil($this->session->userdata('idUsuario'));
-
-
         $this->load->view('templates/header', $data);
         $this->load->view('templates/menu', $data);
         $this->load->view('Categoria/Ver');
         $this->load->view('templates/footer');
     }
-
+// vista para agregar la subcategoria
     public function Agregar() {
         if ($this->session->userdata('rol') == NULL || $this->session->userdata('rol') != 1) {
             redirect(base_url() . 'iniciar');
@@ -259,16 +247,13 @@ class Categoria extends CI_Controller {
     }
 
     public function editar() {
+        if ($this->session->userdata('rol') == NULL || $this->session->userdata('rol') != 1) {
+            redirect(base_url() . 'iniciar');
+        }
         $dato = ['titulo' => " Editar Categoria", 'es_usuario_normal' => FALSE];
         $dato['perfil'] = $this->usuario_model->consultarPerfil($this->session->userdata('idUsuario'));
-
         $idCategoria = $this->uri->segment(3);
         $obtenerCategoria = $this->categoria_model->obtener_categoria_a_modificar($idCategoria);
-
-        // cargar el helper de manejo de formularios
-        $this->load->helper('form');
-        // cargar libreria para validar formularios
-
         if ($obtenerCategoria != FALSE) {
             foreach ($obtenerCategoria->result() as $fila) {
                 $NombreCategoria = $fila->NombreCategoria;
@@ -288,7 +273,6 @@ class Categoria extends CI_Controller {
         $this->load->view('Categoria/Actualizacategoria', $data);
         $this->load->view('templates/footer');
     }
-
     public function CategoriaActualizada() {
         if ($this->session->userdata('rol') == NULL || $this->session->userdata('rol') != 1) {
             redirect(base_url() . 'iniciar');
@@ -311,7 +295,6 @@ class Categoria extends CI_Controller {
 
         redirect('Categoria');
     }
-
     public function modal() {
         if ($this->session->userdata('rol') == NULL || $this->session->userdata('rol') != 1) {
             redirect(base_url() . 'iniciar');
@@ -331,15 +314,12 @@ class Categoria extends CI_Controller {
         $this->load->view('templates/header', $info_modal);
         $this->load->view('categoria/modal', $info_modal);
     }
-
+// inactiva las categorias
     public function inactivar($id) {
         if ($this->session->userdata('rol') == NULL || $this->session->userdata('rol') != 1) {
             redirect(base_url() . 'iniciar');
         }
-
         $this->categoria_model->inactivarcategoria($id);
         redirect('categoria');
     }
-
-    // METEDO PARA LA PAGINACION 
 }

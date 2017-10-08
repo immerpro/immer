@@ -258,37 +258,27 @@
 
 
         </footer>
-        <h2>Reporte de productos.</h2>
-        <?php if ($productosVencidos): ?>
+        <h2>Reporte de productos vendidos.</h2>
+        <?php if ($productosVenta): ?>
             <table class="table table-hover table-bordered table-striped">
                 <thead class="thead-inverse">
                     <tr>
-                        <th width="100">Producto</th>
-                        <th width="100">Minimo Stock</th>
-                        <th width="100">Maximo Stock</th>
-                        <th width="100">Existencias</th>
-                        <th width="100">Vencimiento</th>
-                        <th width="100">cuantos dias para vencerse</th>
+                        <th width="100">Producto Vendido</th>
+                        <th width="100">Venta total</th>
+                        <th width="100">Cantidad maxima</th>
+                       
 
                     </tr>
                 </thead>
 
 
                 <tbody>
-                    <?php foreach ($productosVencidos as $pvencidos): ?>
+                    <?php foreach ($productosVenta as $venta): ?>
                         <tr>
-                            <td width="100"><?php echo $pvencidos['producto']; ?></td>
-                            <td width="100"><?php echo $pvencidos['minimo']; ?></td>
-                            <td width="100"><?php echo $pvencidos['maximo']; ?></td>
-                            <td width="100"><?php echo $pvencidos['existencia']; ?></td>
-                            <td width="100"><?php echo $pvencidos['fechaVencimiento']; ?></td>
-                            <?php if ($pvencidos['fechaVencimiento'] <= date("Ymd")): ?>
-                                <td width="100">vencido</td>
-                            <?php else: ?>
-                                <td width="100"><?php echo $pvencidos['cuantovencerse']; ?></td>
-
-                            <?php endif; ?>
-                        </tr>
+                            <td width="100"><?php echo $venta['productovendido']; ?></td>
+                            <td width="100"><?php echo $venta['totalVenta']; ?></td>
+                            <td width="100"><?php echo $venta['CantidadTotal']; ?></td>
+                            
                     <?php endforeach; ?>
 
                 </tbody>

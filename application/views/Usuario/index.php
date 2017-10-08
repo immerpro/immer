@@ -61,7 +61,7 @@
 
         <br>
 
- <div id="acerca"></div>
+        <div id="acerca"></div>
         <div class="row">
             <div class=" col-md-4">
                 <!--Card-->
@@ -88,7 +88,7 @@
 
             <div class="col-md-4">
                 <div class="card">
-        <!--Card image-->
+                    <!--Card image-->
                     <div class="view overlay hm-white-slight">
                         <img  class="imagencard" src="<?PHP echo base_url(); ?>/public/img/woman_market_2.jpg">
                         <a href="#">
@@ -106,9 +106,9 @@
 
                 </div>
             </div>
-     <div class=" col-md-4">
+            <div class=" col-md-4">
                 <div class="card">
-           <!--Card image-->
+                    <!--Card image-->
                     <div class="view overlay hm-white-slight">
                         <img  class="imagencard" src="<?PHP echo base_url(); ?>/public/img/food.jpg">
                         <a href="#">
@@ -129,8 +129,6 @@
         </div>
 
         <div class="thumbnail">
-
-
             <!--Section: Contact v.1-->
             <section class="section mb-4">
                 <div style="height: 5vh"></div> 
@@ -145,11 +143,12 @@
                     <div class="col-md-6">
 
                     </div>
-                   
+
                     <div class="col-md-7">
 
                         <!-- Contact form -->
-                        <form action="<?php base_url()?>contacto" method="POST">
+
+                        <form action="<?php base_url() ?>contacto" method="POST" data-parsley-validate>
                             <div class="md-form">
                                 <i class="fa fa-user prefix grey-text"></i>
                                 <input type="text" id="form3" class="form-control" data-required="true" name="txtnombre">
@@ -158,24 +157,24 @@
 
                             <div class="md-form">
                                 <i class="fa fa-envelope prefix grey-text"></i>
-                                <input type="text" id="form2" class="form-control"  name="txtemail"data-required="true" data-parsley-type="email" data-parsley-trigger="keyup">
+                                <input type="email" id="form2" class="form-control"  name="txtemail" data-required="true" data-parsley-type="email" data-parsley-trigger="keyup" data-parsley-required-message="el campo no debe estar vacio">
                                 <label for="form2">Tu email</label>
                             </div>
 
                             <div class="md-form">
                                 <i class="fa fa-tag prefix grey-text"></i>
-                                <input type="text" id="form32" class="form-control" data-required="true" name="txtAsunto">
+                                <input type="text" id="form32" class="form-control" data-required="true" name="txtAsunto" data-parsley-required-message="el campo no debe estar vacio">
                                 <label for="form34">Asunto</label>
                             </div>
 
                             <div class="md-form">
                                 <i class="fa fa-pencil prefix grey-text"></i>
-                                <textarea type="text" id="form8" class="md-textarea" style="height: 100px" data-required="true" name="txtMensaje"></textarea>
+                                <textarea type="text" id="form8" class="md-textarea" style="height: 100px" data-required="true" name="txtMensaje" data-parsley-required-message="el campo no debe estar vacio"></textarea>
                                 <label for="form8">Su mensaje</label>
                             </div>
 
                             <div class="text-center">
-                                <button class="btn btn-orange">Enviar <i class="fa fa-paper-plane-o ml-1"></i></button>
+                                <button class="btn btn-orange" type="submit">Enviar <i class="fa fa-paper-plane-o ml-1"></i></button>
                             </div>
 
                         </form>
@@ -184,9 +183,12 @@
 
                     </div>
                     <!--/Second column-->
+                     <div class="row">
+            <?php messages_flash('red',validation_errors(),'Errores del formulario', true);?>
+        </div>
 
                 </div>
-
+               
             </section>
             <!--/Section: Contact v.1-->
         </div>

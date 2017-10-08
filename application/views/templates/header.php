@@ -18,12 +18,14 @@
         <?php echo link_tag('public/jqueryUI/jquery-ui.min.css'); ?>
         <?php echo link_tag('public/alerta/themes/alertify.core.css'); ?>
         <?php echo link_tag('public/alerta/themes/alertify.default.css'); ?>
+        <?php echo link_tag('public/dataTables/dataTables.bootstrap.css'); ?>
         <script type="text/javascript" src="<?PHP echo base_url() ?>public/js/jquery-3.1.1.min.js"></script>
         <script type="text/javascript" src="<?PHP echo base_url() ?>public/js/parsley.min.js"></script>
         <script type="text/javascript" src="<?PHP echo base_url() ?>public/js/es.js"></script>
         <script type="text/javascript" src="<?PHP echo base_url() ?>public/alerta/lib/alertify.js"></script>
         <script type="text/javascript" src="<?PHP echo base_url() ?>public/jqueryUI/jquery-ui.min.js"></script>
         <script type="text/javascript" src="<?PHP echo base_url() ?>public/js/push.min.js"></script>
+        
 
 
         <?php // echo link_tag('public/css/bootstrap-social/bootstrap-social.css'); ?>
